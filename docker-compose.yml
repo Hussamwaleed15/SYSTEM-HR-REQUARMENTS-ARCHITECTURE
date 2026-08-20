@@ -1,0 +1,78 @@
+services:
+  auth-service:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=${DB_URL:-jdbc:oracle:thin:@host.docker.internal:1521:orcl}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER:-hr}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD:-hussam}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  job-service:
+    build:
+      context: ./job
+      dockerfile: Dockerfile
+    container_name: job-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=${DB_URL:-jdbc:oracle:thin:@host.docker.internal:1521:orcl}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER:-hr}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD:-hussam}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  candidate-service:
+    build:
+      context: ./candidate
+      dockerfile: Dockerfile
+    container_name: candidate-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_DATASOURCE_URL=${DB_URL:-jdbc:oracle:thin:@host.docker.internal:1521:orcl}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER:-hr}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD:-hussam}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  application-service:
+    build:
+      context: ./application
+      dockerfile: Dockerfile
+    container_name: application-service
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_DATASOURCE_URL=${DB_URL:-jdbc:oracle:thin:@host.docker.internal:1521:orcl}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER:-hr}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD:-hussam}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  ai-service:
+    build:
+      context: ./ai
+      dockerfile: Dockerfile
+    container_name: ai-service
+    ports:
+      - "8085:8085"
+    restart: unless-stopped
+
+  notification-service:
+    build:
+      context: ./notification
+      dockerfile: Dockerfile
+    container_name: notification-service
+    ports:
+      - "8086:8086"
+    restart: unless-stopped

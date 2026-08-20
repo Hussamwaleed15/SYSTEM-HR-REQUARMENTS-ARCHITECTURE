@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: services
+
+  main:
+    allow-circular-references: true
+
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: hr
+    password: hussam
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          fetch_size: 100
+
+  flyway:
+    enabled: false
+
+server:
+  port: 8080
+
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  expiration: 86400000
+
+logging:
+  level:
+    com.bank.recruitment: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG

@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: job-service
+
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: hr
+    password: hussam
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          fetch_size: 100
+
+server:
+  port: 8082
+
+jwt:
+  secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}

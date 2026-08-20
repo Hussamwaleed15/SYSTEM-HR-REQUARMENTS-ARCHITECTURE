@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: hr
+    password: hussam
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          fetch_size: 100
+
+server:
+  port: 8081
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 86400000
+
+ldap:
+  enabled: ${LDAP_ENABLED:false}
+  urls: ${LDAP_URL:ldap://localhost:389}
+  base-dn: ${LDAP_BASE_DN:dc=example,dc=com}
+  user-search-base: ${LDAP_USER_SEARCH_BASE:ou=users}
+  user-search-filter: ${LDAP_USER_SEARCH_FILTER:(uid={0})}
+  manager-dn: ${LDAP_MANAGER_DN:cn=admin,dc=example,dc=com}
+  manager-password: ${LDAP_MANAGER_PASSWORD:admin}
+
+services:
+  notification:
+    url: ${NOTIFICATION_SERVICE_URL:http://localhost:8086/api/notifications/send-email}
+
+auth:
+  reset-token:
+    expiration-minutes: 15
