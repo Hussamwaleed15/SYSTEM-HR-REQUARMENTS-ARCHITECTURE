@@ -1,3 +1,6 @@
+Here is the complete **`README.md`** file formatted in standard **Markdown**:
+
+````markdown
 # 🏢 Enterprise HR Recruitment & Talent Acquisition Platform
 
 [![Java](https://img.shields.io/badge/Java-21%20LTS-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
@@ -37,14 +40,15 @@
 9. [Security, Identity & RBAC Matrix](#-security-identity--rbac-matrix)
 10. [Event-Driven Messaging (RabbitMQ Topology)](#-event-driven-messaging-rabbitmq-topology)
 11. [Complete API Catalog & Reference](#-complete-api-catalog--reference)
-12. [Environment Configuration Reference](#-environment-configuration-reference)
-13. [Quick Start & Deployment Guide](#-quick-start--deployment-guide)
-    - [13.1 Local Scripted Deployment (Windows)](#131-local-scripted-deployment-windows)
-    - [13.2 Docker Compose Deployment](#132-docker-compose-deployment)
-    - [13.3 Manual Gradle Commands](#133-manual-gradle-commands)
-14. [Testing & Quality Assurance](#-testing--quality-assurance)
-15. [Postman Collections](#-postman-collections)
-16. [Project Directory Layout](#-project-directory-layout)
+12. [Interactive Swagger & OpenAPI 3.0 Documentation](#-interactive-swagger--openapi-30-documentation)
+13. [Environment Configuration Reference](#-environment-configuration-reference)
+14. [Quick Start & Deployment Guide](#-quick-start--deployment-guide)
+    - [14.1 Local Scripted Deployment (Windows)](#141-local-scripted-deployment-windows)
+    - [14.2 Docker Compose Deployment](#142-docker-compose-deployment)
+    - [14.3 Manual Gradle Commands](#143-manual-gradle-commands)
+15. [Testing & Quality Assurance](#-testing--quality-assurance)
+16. [Postman Collections](#-postman-collections)
+17. [Project Directory Layout](#-project-directory-layout)
 
 ---
 
@@ -105,6 +109,7 @@ From vacancy creation, talent sourcing, multi-format CV parsing (PDF, Word DOC/D
 - 📊 **Interview Scoring & Automatic Progression**: Integrated interview scheduling and scoring system with threshold-based automated advancement (scores $\ge 70$ auto-promote to `UNDER_REVIEW`).
 - 🔍 **Public Candidate Self-Service Tracking**: Zero-login, instant application status tracking using secure, non-guessable `UUIDv4` tracking IDs (`X-Tracking-ID`).
 - ⚡ **Asynchronous Event-Driven Notifications**: Non-blocking email dispatching powered by **RabbitMQ** message broker with automatic fallback to logging mode for development environments.
+- 🌐 **Interactive OpenAPI 3.0 & Swagger UI Integration**: Complete, embedded Swagger documentation on all 6 microservices with built-in JWT Bearer token authorization and in-browser endpoint testing.
 - 🧹 **Automated Database Housekeeping**: Daily Spring Cron daemon (`@Scheduled`) purging expired and closed job listings older than 30 days.
 
 ---
@@ -430,11 +435,11 @@ The **Auth Service** is the perimeter security gateway and identity provider for
   - 6-digit cryptographic OTP generation for password resets with a 15-minute TTL.
   - Dispatches OTP reset codes asynchronously via RabbitMQ to the Notification Service.
 - **Key Source Files**:
-  - [`AuthController.java`](file:///c:/Users/Hossam/Downloads/project/services/services/auth/src/main/java/com/services/auth/controller/AuthController.java) — REST endpoints for login, register, password reset.
-  - [`AuthService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/auth/src/main/java/com/services/auth/service/AuthService.java) — Core business logic, token creation, OTP verification.
-  - [`LdapAuthService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/auth/src/main/java/com/services/auth/service/LdapAuthService.java) — Spring Security LDAP directory communication.
-  - [`JwtService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/auth/src/main/java/com/services/auth/service/JwtService.java) — Token encoding, decoding, validation.
-  - [`RabbitMQConfig.java`](file:///c:/Users/Hossam/Downloads/project/services/services/auth/src/main/java/com/services/auth/config/RabbitMQConfig.java) — Topic exchange and routing key definitions.
+  - `AuthController.java` — REST endpoints for login, register, password reset.
+  - `AuthService.java` — Core business logic, token creation, OTP verification.
+  - `LdapAuthService.java` — Spring Security LDAP directory communication.
+  - `JwtService.java` — Token encoding, decoding, validation.
+  - `RabbitMQConfig.java` — Topic exchange and routing key definitions.
 
 ---
 
@@ -448,10 +453,10 @@ The **Job Service** manages the corporate job catalog, vacancy lifecycles, and s
   - Vacancy lifecycle management (`OPEN`, `CLOSED`, `ON_HOLD`).
   - **Automated Purge Daemon (`JobCleanupService`)**: Runs daily at 2:00 AM via cron expression `@Scheduled(cron = "0 0 2 * * ?")` to delete closed jobs older than 30 days.
 - **Key Source Files**:
-  - [`JobController.java`](file:///c:/Users/Hossam/Downloads/project/services/services/job/src/main/java/com/services/job/controller/JobController.java) — REST endpoints for job creation, search, status updates.
-  - [`JobService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/job/src/main/java/com/services/job/service/JobService.java) — Job business logic and JPA Specifications.
-  - [`JobCleanupService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/job/src/main/java/com/services/job/service/JobCleanupService.java) — Scheduled cron task for 30-day cleanup.
-  - [`JobSpecification.java`](file:///c:/Users/Hossam/Downloads/project/services/services/job/src/main/java/com/services/job/repository/JobSpecification.java) — Dynamic criteria queries.
+  - `JobController.java` — REST endpoints for job creation, search, status updates.
+  - `JobService.java` — Job business logic and JPA Specifications.
+  - `JobCleanupService.java` — Scheduled cron task for 30-day cleanup.
+  - `JobSpecification.java` — Dynamic criteria queries.
 
 ---
 
@@ -466,9 +471,9 @@ The **Candidate Service** manages the global talent pool, candidate profiles, an
   - Skills and experience searching (`findBySkillsContainingIgnoreCase`).
   - Storage of AI validation flags (`aiValidated`, `aiConfidenceScore`, `aiValidationNotes`).
 - **Key Source Files**:
-  - [`CandidateController.java`](file:///c:/Users/Hossam/Downloads/project/services/services/candidate/src/main/java/com/services/candidate/controller/CandidateController.java) — Endpoints for candidate ingestion, queries, and CV download.
-  - [`CandidateService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/candidate/src/main/java/com/services/candidate/service/CandidateService.java) — Candidate lifecycle management.
-  - [`FileStorageService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/candidate/src/main/java/com/services/candidate/service/FileStorageService.java) — Multipart file persistence and resource loading.
+  - `CandidateController.java` — Endpoints for candidate ingestion, queries, and CV download.
+  - `CandidateService.java` — Candidate lifecycle management.
+  - `FileStorageService.java` — Multipart file persistence and resource loading.
 
 ---
 
@@ -486,9 +491,9 @@ The **Application Service** is the central workflow orchestrator connecting Cand
   - **Executive Analytics Dashboard (`/api/applications/stats`)**: Computes total applications, status distribution, average AI score, max AI score, hiring success rate ($\%$), and recent application counts.
   - Public status tracking endpoints (by Tracking ID or email + jobId).
 - **Key Source Files**:
-  - [`ApplicationController.java`](file:///c:/Users/Hossam/Downloads/project/services/services/application/src/main/java/com/services/application/controller/ApplicationController.java) — Complete application REST API.
-  - [`ApplicationService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/application/src/main/java/com/services/application/service/ApplicationService.java) — Workflow orchestration, stats computation.
-  - [`ApplicationStatusMachine.java`](file:///c:/Users/Hossam/Downloads/project/services/services/application/src/main/java/com/services/application/service/ApplicationStatusMachine.java) — State transition validation matrix.
+  - `ApplicationController.java` — Complete application REST API.
+  - `ApplicationService.java` — Workflow orchestration, stats computation.
+  - `ApplicationStatusMachine.java` — State transition validation matrix.
 
 ---
 
@@ -509,10 +514,10 @@ The **AI Service** is a stateless NLP and document processing microservice provi
   - **Confidence Score & Anti-Fraud Verification**: Compares self-declared candidate data against OCR-extracted text to prevent resume inflation.
   - **Algorithmic Job Matching**: Computes match scores and suitability classifications (`Excellent`, `Good`, `Moderate`, `Low`).
 - **Key Source Files**:
-  - [`AiController.java`](file:///c:/Users/Hossam/Downloads/project/services/services/ai/src/main/java/com/services/ai/controller/AiController.java) — Endpoints for `/api/ai/parse-cv` and `/api/ai/match`.
-  - [`CvParserService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/ai/src/main/java/com/services/ai/service/CvParserService.java) — Entity extraction and confidence score logic.
-  - [`AiMatchingService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/ai/src/main/java/com/services/ai/service/AiMatchingService.java) — Weighted matching algorithm.
-  - [`TextExtractorService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/ai/src/main/java/com/services/ai/service/TextExtractorService.java) — PDFBox, POI, and Tika extraction pipelines.
+  - `AiController.java` — Endpoints for `/api/ai/parse-cv` and `/api/ai/match`.
+  - `CvParserService.java` — Entity extraction and confidence score logic.
+  - `AiMatchingService.java` — Weighted matching algorithm.
+  - `TextExtractorService.java` — PDFBox, POI, and Tika extraction pipelines.
 
 ---
 
@@ -526,9 +531,9 @@ The **Notification Service** is an asynchronous consumer and SMTP email dispatch
   - Formats HTML and plain-text email bodies for OTP codes, interview schedules, and status updates.
   - **Development Mock Fallback Mode**: When running locally without a real SMTP server or with default placeholder credentials (`dummy@gmail.com`), the service gracefully logs the email to console/logs without throwing exceptions or blocking the caller.
 - **Key Source Files**:
-  - [`NotificationEventConsumer.java`](file:///c:/Users/Hossam/Downloads/project/services/services/notification/src/main/java/com/services/notification/consumer/NotificationEventConsumer.java) — RabbitMQ message listener.
-  - [`EmailService.java`](file:///c:/Users/Hossam/Downloads/project/services/services/notification/src/main/java/com/services/notification/service/EmailService.java) — SMTP dispatching and mock fallback.
-  - [`NotificationController.java`](file:///c:/Users/Hossam/Downloads/project/services/services/notification/src/main/java/com/services/notification/controller/NotificationController.java) — Direct REST endpoint.
+  - `NotificationEventConsumer.java` — RabbitMQ message listener.
+  - `EmailService.java` — SMTP dispatching and mock fallback.
+  - `NotificationController.java` — Direct REST endpoint.
 
 ---
 
@@ -788,15 +793,60 @@ Exchange: recruitment.exchange (Topic Exchange)
 
 ---
 
-### 🌐 Swagger / OpenAPI Interactive Documentation
+## 🌐 Interactive Swagger & OpenAPI 3.0 Documentation
 
-When the services are running, interactive Swagger UI documentation is accessible at:
-- **Auth Service**: `http://localhost:8081/swagger-ui/index.html`
-- **Job Service**: `http://localhost:8082/swagger-ui/index.html`
-- **Candidate Service**: `http://localhost:8083/swagger-ui/index.html`
-- **Application Service**: `http://localhost:8084/swagger-ui/index.html`
-- **AI Service**: `http://localhost:8085/swagger-ui/index.html`
-- **Notification Service**: `http://localhost:8086/swagger-ui/index.html`
+Every microservice in the platform is fully integrated with **Springdoc OpenAPI 3.0 & Swagger UI**. This provides automated, live, interactive API documentation that allows developers, QA engineers, and client integrators to explore schemas, review parameters, and execute live HTTP requests directly from their web browser without needing third-party tools.
+
+### 🛡️ Built-in JWT Bearer Authentication in Swagger UI:
+All secured services (`Auth`, `Job`, `Candidate`, `Application`) are configured with a centralized `OpenApiConfig` class defining the `bearerAuth` security scheme. 
+
+To test secured endpoints directly in Swagger UI:
+1. Authenticate via `POST /api/auth/login` (or `/register`) to obtain a valid JWT token.
+2. Click the green **Authorize 🔓** button located at the top right of the Swagger UI page.
+3. Enter your JWT token (e.g. `eyJhbGciOiJIUzI1NiJ9...`) in the `Value` field.
+4. Click **Authorize** and close the dialog. All subsequent requests executed via **"Try it out"** will automatically include the `Authorization: Bearer <token>` header.
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                       INTERACTIVE SWAGGER UI DASHBOARDS CATALOG                                        │
+├─────────────────────┬────────┬─────────────────────────────────────────────────┬───────────────────────────────────────┤
+│ Microservice        │ Port   │ Swagger UI Interactive URL                      │ Raw OpenAPI 3.0 JSON Spec             │
+├─────────────────────┼────────┼─────────────────────────────────────────────────┼───────────────────────────────────────┤
+│ Auth Service        │ `8081` │ http://localhost:8081/swagger-ui/index.html   │ http://localhost:8081/v3/api-docs   │
+│ Job Service         │ `8082` │ http://localhost:8082/swagger-ui/index.html   │ http://localhost:8082/v3/api-docs   │
+│ Candidate Service   │ `8083` │ http://localhost:8083/swagger-ui/index.html   │ http://localhost:8083/v3/api-docs   │
+│ Application Service │ `8084` │ http://localhost:8084/swagger-ui/index.html   │ http://localhost:8084/v3/api-docs   │
+│ AI Service          │ `8085` │ http://localhost:8085/swagger-ui/index.html   │ http://localhost:8085/v3/api-docs   │
+│ Notification Service│ `8086` │ http://localhost:8086/swagger-ui/index.html   │ http://localhost:8086/v3/api-docs   │
+└─────────────────────┴────────┴─────────────────────────────────────────────────┴───────────────────────────────────────┘
+```
+
+### ⚙️ OpenAPI Configuration Architecture:
+Each microservice contains a dedicated `@Configuration` class (such as `OpenApiConfig.java`) that constructs the OpenAPI metadata and security schemes:
+
+```java
+@Configuration
+public class OpenApiConfig {
+    @Bean
+    public OpenAPI customOpenAPI() {
+        final String securitySchemeName = "bearerAuth";
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Service API Documentation")
+                        .version("1.0.0")
+                        .description("REST API Documentation with Bearer JWT Security")
+                        .contact(new Contact().name("HR Recruitment Platform Team")))
+                .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+                .components(new Components()
+                        .addSecuritySchemes(securitySchemeName,
+                                new SecurityScheme()
+                                        .name(securitySchemeName)
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")));
+    }
+}
+```
 
 ---
 
@@ -832,7 +882,7 @@ When the services are running, interactive Swagger UI documentation is accessibl
 
 ---
 
-### 13.1 Local Scripted Deployment (Windows)
+### 14.1 Local Scripted Deployment (Windows)
 
 The repository provides automated launcher scripts:
 
@@ -858,7 +908,7 @@ The repository provides automated launcher scripts:
 
 ---
 
-### 13.2 Docker Compose Deployment
+### 14.2 Docker Compose Deployment
 
 To build and orchestrate all services along with RabbitMQ in lightweight Alpine Linux containers:
 
@@ -890,7 +940,7 @@ To build and orchestrate all services along with RabbitMQ in lightweight Alpine 
 
 ---
 
-### 13.3 Manual Gradle Commands
+### 14.3 Manual Gradle Commands
 
 You can build and run any individual service using standard Gradle tasks:
 
@@ -931,8 +981,8 @@ The codebase includes an automated test suite featuring **JUnit 5**, **Mockito**
 
 Pre-configured Postman collection files are included in the root directory for instant API testing:
 
-- 📄 [`Recruitment_Platform_API.postman_collection.json`](file:///c:/Users/Hossam/Downloads/project/services/services/Recruitment_Platform_API.postman_collection.json)
-- 📄 [`Recruitment_Platform_API_Final_Edition.postman_collection.json`](file:///c:/Users/Hossam/Downloads/project/services/services/Recruitment_Platform_API_Final_Edition.postman_collection.json)
+- `Recruitment_Platform_API.postman_collection.json`
+- `Recruitment_Platform_API_Final_Edition.postman_collection.json`
 
 **To Import:**
 1. Open Postman $\rightarrow$ Click **Import**.
@@ -1025,3 +1075,4 @@ services/
 <div align="center">
   <sub>Built with ❤️ for Enterprise Human Resources & Talent Acquisition Teams.</sub>
 </div>
+````
